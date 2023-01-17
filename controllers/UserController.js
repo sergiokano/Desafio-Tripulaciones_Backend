@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const jwt_secret = process.env.JWT_SECRET;
 require("dotenv").config();
 
 const UserController = {
