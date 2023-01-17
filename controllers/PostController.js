@@ -12,12 +12,26 @@ const PostController = {
           $push: { postIds: post._id },
         });
         res.status(201).send(post);
-        res.send({ msg: "Post creado correctamente", post });
+        res.send({ msg: "Incidencia creada correctamente", post });
       } catch (error) {
         console.error(error);
         next(error);
       }
     },
+    async getAll(req, res) {
+        try {
+          const { page = 1, limit = 200 } = req.query;
+          const posts = await Post.find()
+            .populate("userId")
+            .populate("comments.userId")
+            .limit(limit*1)
+            .skip((page - 1) * limit);
+          res.send(posts);
+          res.send({ msg: "Aquí tienes todas las incidencias", post });
+        } catch (error) {
+          console.error(error);
+        }
+      },
 };
 
 module.exports = PostController;
