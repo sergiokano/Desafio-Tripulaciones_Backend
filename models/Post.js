@@ -3,23 +3,31 @@ const ObjectId = mongoose.SchemaTypes.ObjectId;
 
 const PostSchema = new mongoose.Schema(
   {
-    title: {
+    incidence: {
       type: String,
 
-      required: [true, "Por favor, escribe un post"],
+      required: [true, "Por favor, comunícanos la incidencia"],
     },
 
-    body: {
+    description: {
       type: String,
 
-      required: [true, "Por favor, tu post debe contener una descrpción"],
+      required: [true, "Por favor, descríbenos la incidencia"],
     },
 
     userId: {
       type: ObjectId,
       ref: "User",
     },
-     
+    comments: [
+      {
+        userId: { type: ObjectId, ref: "User" },
+        comment: String,
+      },
+    ],
+
+    verification: [{ type: ObjectId }],
+    image_path: { type: String }
   },
   { timestamps: true }
 );

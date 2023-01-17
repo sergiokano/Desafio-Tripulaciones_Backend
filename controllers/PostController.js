@@ -1,20 +1,23 @@
 const Post = require("../models/Post");
-// const User = require("../models/User");
+const User = require("../models/User");
 
 const PostController = {
-  async create(req, res) {
-    try {
-      const post = await post.create(req.body);
-
-      res.status(201).send(post);
-    } catch (error) {
-      console.error(error);
-
-      res
-        .status(500)
-        .send({ message: "Ha habido un problema al crear la petición" });
-    }
-  },
+    async create(req, res, next) {
+      try {
+        const post = await Post.create({
+          ...req.body,
+          userId: req.user._id,
+        });
+        await User.findByIdAndUpdate(req.user._id, {
+          $push: { postIds: post._id },
+        });
+        res.status(201).send(post);
+        res.send({ msg: "Post creado correctamente", post });
+      } catch (error) {
+        console.error(error);
+        next(error);
+      }
+    },
 };
 
 module.exports = PostController;
