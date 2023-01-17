@@ -1,37 +1,31 @@
-const User = require('../models/User');
+const User = require("../models/User");
 
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
 const jwt_secret = process.env.JWT_SECRET;
 
-const authentication = async(req, res, next) => {
+const authentication = async (req, res, next) => {
+  try {
+    const token = req.headers.authorization;
 
-try {
+    const payload = jwt.verify(token, jwt_secret);
 
-const token = req.headers.authorization;
+    const user = await User.findOne({ _id: payload._id, tokens: token });
 
-const payload = jwt.verify(token, jwt_secret);
+    if (!user) {
+      return res.status(401).send({ message: "No estas autorizado" });
+    }
 
-const user = await User.findOne({ _id: payload._id, tokens: token });
+    req.user = user;
 
-if (!user) {
+    next();
+  } catch (error) {
+    console.error(error);
 
-return res.status(401).send({ message: 'No estas autorizado' });
+    return res
+      .status(500)
+      .send({ error, message: "Ha habido un problema con el token" });
+  }
+};
 
-}
-
-req.user = user;
-
-next();
-
-} catch (error) {
-
-console.error(error)
-
-return res.status(500).send({ error, message: 'Ha habido un problema con el token' })
-
-}
-
-}
-
-module.exports = { authentication }
+module.exports = { authentication };

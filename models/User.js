@@ -4,7 +4,7 @@ const ObjectId = mongoose.SchemaTypes.ObjectId;
 const UserSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, "Please, fill in your name"],
+    required: [true, "Por favor, ingresa tu nombre"],
     minlength: 3,
     maxlength: 20,
   },
@@ -12,19 +12,19 @@ const UserSchema = new mongoose.Schema({
       type: String,
       match: [
         /^[0-9a-zA-Z]+([0-9a-zA-Z]*[-._+])*[0-9a-zA-Z]+@[0-9a-zA-Z]+([-.][0-9a-zA-Z]+)*([0-9a-zA-Z]*[.])[a-zA-Z]{2,6}$/,
-        "Please enter a valid email address",
+        "Por favor, ingresa un correo valido",
       ],
       unique: true,
-      required: [true, "Please, fill in your email"],
+      required: [true, "Por favor, ingresa tu correo"],
     },
     password: {
       type: String,
-      required: [true, "Please, fill in your password"],
+      required: [true, "Por favor, ingresa tu contraseña"],
       // minlength: 8,
       // maxlength: 1024,
       // pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,}$/,
       message:
-        "Please enter a password that meets the following criteria: at least 8 characters long, contains at least 1 lowercase letter, 1 uppercase letter, 1 number, and 1 special character.",
+        "Introduzca una contraseña que cumpla los siguientes criterios: Al menos 8 caracteres, al menos 1 letra minúscula, 1 letra mayúscula, 1 número y 1 carácter especial.",
     },
     gender: {
       type: String,
@@ -36,21 +36,21 @@ const UserSchema = new mongoose.Schema({
       required: true,
       enum: {
         values: [
-          "January",
-          "February",
-          "March",
-          "April",
-          "May",
-          "June",
-          "July",
-          "August",
-          "September",
-          "October",
-          "November",
-          "December",
+          "Enero",
+          "Febrero",
+          "Marzo",
+          "Abril",
+          "Mayo",
+          "Junio",
+          "Julio",
+          "Agosto",
+          "Septiembre",
+          "Octubre",
+          "Noviembre",
+          "Diciembre",
         ],
         message:
-          "Please use one of the following months: January, February, March, April, May, June, July, August, September, October, November, December.",
+          "Utilice uno de los meses siguientes: Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre y Diciembre.",
       },
     },
     // date: {
