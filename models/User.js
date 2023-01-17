@@ -63,12 +63,16 @@ const UserSchema = new mongoose.Schema({
 
     isAdmin: { type: Boolean, default: false },
     tokens: [],
+    postIds: [{ type: ObjectId, ref: 'Post' }],
 
-  },
-  { timestamps: true }
-);
-
-
+  }, { timestamps: true });
+  UserSchema.methods.toJSON = function() {
+      const user = this._doc;
+      delete user.tokens;
+      delete user.password;
+      return user;
+  
+  }
 const User = mongoose.model("User", UserSchema);
 
 module.exports = User;
