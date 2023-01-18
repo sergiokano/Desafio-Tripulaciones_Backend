@@ -1,12 +1,19 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const jwt_secret = process.env.JWT_SECRET;
 require("dotenv").config();
 
 const UserController = {
   async createUser(req, res, next) {
     try {
+      const birthdate = new Date(req.body.birthdate)
+      const monthDiff = Date.now() - birthdate.getTime()
+      const ageDt = new Date(monthDiff)
+      const year = ageDt.getUTCFullYear();
+      const age = Math.abs(year - 1970);
+      if(age < 18 ) {
+        return res.status(400).send ({msg: "El usuario debe ser mayor de 18"})
+      }
       const password = await bcrypt.hash(req.body.password, 10);
       const user = await User.create({ ...req.body, password, role: "user" });
       res.status(201).send({ user, message: "Usuario creado" });
@@ -14,7 +21,7 @@ const UserController = {
       console.error(error);
       res
         .status(500)
-        .send({ msg: "Error: No es posible crear el usuario", error });
+        .send({ msg: "No es posible crear el usuario", error });
     }
   },
 

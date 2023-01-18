@@ -26,40 +26,13 @@ const UserSchema = new mongoose.Schema({
       message:
         "Introduzca una contraseña que cumpla los siguientes criterios: Al menos 8 caracteres, al menos 1 letra minúscula, 1 letra mayúscula, 1 número y 1 carácter especial.",
     },
-    gender: {
-      type: String,
-      required: true,
-      enum: ["Male", "Female", "Non-Binary","male", "female"],
-    },
-    month: {
-      type: String,
-      required: true,
-      enum: {
-        values: [
-          "Enero",
-          "Febrero",
-          "Marzo",
-          "Abril",
-          "Mayo",
-          "Junio",
-          "Julio",
-          "Agosto",
-          "Septiembre",
-          "Octubre",
-          "Noviembre",
-          "Diciembre",
-        ],
-        message:
-          "Utilice uno de los meses siguientes: Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre y Diciembre.",
+
+    birthdate: {
+      type: Date,
+      required: [true, "Por favor, ingresa tu fecha de nacimiento"],
+    
       },
-    },
-    // date: {
-    //   type: Number,
-    //   required: true,
-    //   min: 1,
-    //   max: 31,
-    // },
-    // year: { type: String, required: true },
+       
 
     isAdmin: { type: Boolean, default: false },
     tokens: [],
