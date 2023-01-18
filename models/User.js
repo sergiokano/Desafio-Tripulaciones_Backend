@@ -64,6 +64,7 @@ const UserSchema = new mongoose.Schema({
     isAdmin: { type: Boolean, default: false },
     tokens: [],
     postIds: [{ type: ObjectId, ref: 'Post' }],
+    image_path: { type: String }
 
   }, { timestamps: true });
   UserSchema.methods.toJSON = function() {
