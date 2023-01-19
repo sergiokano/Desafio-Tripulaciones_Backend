@@ -1,5 +1,5 @@
 const User = require("../models/User");
-const bcrypt = require("bcryptjs");
+const argon2 = require('argon2');
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
@@ -14,7 +14,7 @@ const UserController = {
       if(age < 18 ) {
         return res.status(400).send({msg: "El usuario debe ser mayor de 18"})
       }
-      const password = await bcrypt.hash(req.body.password, 10);
+      const password = await argon2.hash(req.body.password);
       const user = await User.create({ ...req.body, password, role: "user" });
       res.status(201).send({ user, password, message: "Usuario creado" });
     } catch (error) {
