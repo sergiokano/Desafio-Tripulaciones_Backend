@@ -62,7 +62,7 @@ const UserSchema = new mongoose.Schema(
                 "Introduzca una contraseña que cumpla los siguientes criterios: Al menos 8 caracteres, al menos 1 letra minúscula, 1 letra mayúscula, 1 número y 1 carácter especial.",
         },
 
-
+        tokens: [],
         isAdmin: { type: Boolean, default: false },
         postIds: [{ type: ObjectId, ref: "Post" }],
     },
