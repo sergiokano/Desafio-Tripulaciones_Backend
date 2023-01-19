@@ -26,7 +26,7 @@ const PostSchema = new mongoose.Schema(
       },
     ],
 
-    likes: [{ type: ObjectId }],
+    verification: [{ type: ObjectId }],
     image_path: { type: String }
   },
   { timestamps: true }

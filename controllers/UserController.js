@@ -1,5 +1,5 @@
 const User = require("../models/User");
-const argon2 = require('argon2');
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
@@ -14,7 +14,7 @@ const UserController = {
       if(age < 18 ) {
         return res.status(400).send({msg: "El usuario debe ser mayor de 18"})
       }
-      const password = await argon2.hash(req.body.password);
+      const password = await bcrypt.hash(req.body.password, 10);
       const user = await User.create({ ...req.body, password, role: "user" });
       res.status(201).send({ user, message: "Usuario creado" });
     } catch (error) {
@@ -35,7 +35,7 @@ const UserController = {
         return res.status(400).send({ msg: "Correo o contraseña incorrectos" });
       }
 
-      const isMatch = await argon2.compare(req.body.password, user.password);
+      const isMatch = await bcrypt.compare(req.body.password, user.password);
       if (!isMatch) {
         return res.status(400).send({ msg: "Correo o contraseña incorrectos" });
       }
@@ -44,7 +44,7 @@ const UserController = {
       if (user.tokens.length > 4) user.tokens.shift();
       user.tokens.push(token);
       await user.save();
-      res.send({ msg: "Bienvenid@ " + user.name, token, user });
+      res.send({ msg: "Bienvenid@ " + user.username, token, user });
     } catch (error) {
       console.error(error);
     }

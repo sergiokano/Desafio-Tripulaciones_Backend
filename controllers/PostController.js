@@ -35,11 +35,11 @@ const PostController = {
       },
       async getPostsByName(req, res) {
         try {
-          if (req.params.title.length > 20) {
+          if (req.params.incidence.length > 20) {
             return res.status(400).send("Búsqueda demasiado larga");
           }
-          const title = new RegExp(req.params.title, "i");
-          const post = await Post.find({ title });
+          const incidence = new RegExp(req.params.incidence, "i");
+          const post = await Post.find({ incidence });
           res.send(post);
         } catch (error) {
           console.log(error);
@@ -89,10 +89,10 @@ const PostController = {
       async like(req, res) {
         try {
           const existPost = await Post.findById(req.params._id);
-          if (!existPost.likes.includes(req.user._id)) {
+          if (!existPost.verification.includes(req.user._id)) {
             const post = await Post.findByIdAndUpdate(
               req.params._id,
-              { $push: { likes: req.user._id } },
+              { $push: { verification: req.user._id } },
               { new: true }
             );
     
@@ -103,7 +103,7 @@ const PostController = {
             );
             res.send(post);
           } else {
-            res.status(400).send({ msg: "¡Ya has dado like a este post!" });
+            res.status(400).send({ msg: "¡Ya has verificado esta incidencia!" });
           }
         } catch (error) {
           console.error(error);
@@ -115,7 +115,7 @@ const PostController = {
         try {
           const post = await Post.findByIdAndUpdate(
             req.params._id,
-            { $pull: { likes: req.user._id } },
+            { $pull: { verification: req.user._id } },
             { new: true }
           );
           await User.findByIdAndUpdate(
