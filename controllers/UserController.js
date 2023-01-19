@@ -1,5 +1,5 @@
 const User = require("../models/User");
-const bcrypt = require("bcryptjs");
+const argon2 = require('argon2');
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
@@ -12,9 +12,9 @@ const UserController = {
       const year = ageDt.getUTCFullYear();
       const age = Math.abs(year - 1970);
       if(age < 18 ) {
-        return res.status(400).send ({msg: "El usuario debe ser mayor de 18"})
+        return res.status(400).send({msg: "El usuario debe ser mayor de 18"})
       }
-      const password = await bcrypt.hash(req.body.password, 10);
+      const password = await argon2.hash(req.body.password);
       const user = await User.create({ ...req.body, password, role: "user" });
       res.status(201).send({ user, message: "Usuario creado" });
     } catch (error) {
@@ -35,7 +35,7 @@ const UserController = {
         return res.status(400).send({ msg: "Correo o contraseña incorrectos" });
       }
 
-      const isMatch = await bcrypt.compare(req.body.password, user.password);
+      const isMatch = await argon2.compare(req.body.password, user.password);
       if (!isMatch) {
         return res.status(400).send({ msg: "Correo o contraseña incorrectos" });
       }
