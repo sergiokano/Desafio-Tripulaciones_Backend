@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const ObjectId = mongoose.SchemaTypes.ObjectId;
 
+
 const UserSchema = new mongoose.Schema(
     {
         firstName: {
@@ -60,6 +61,8 @@ const UserSchema = new mongoose.Schema(
             message:
                 "Introduzca una contraseña que cumpla los siguientes criterios: Al menos 8 caracteres, al menos 1 letra minúscula, 1 letra mayúscula, 1 número y 1 carácter especial.",
         },
+
+
         isAdmin: { type: Boolean, default: false },
         postIds: [{ type: ObjectId, ref: "Post" }],
     },
@@ -74,3 +77,5 @@ UserSchema.methods.toJSON = function () {
 const User = mongoose.model("User", UserSchema);
 
 module.exports = User;
+
+
