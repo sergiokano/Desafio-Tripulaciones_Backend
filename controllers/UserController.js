@@ -16,7 +16,7 @@ const UserController = {
       }
       const password = await bcrypt.hash(req.body.password, 10);
       const user = await User.create({ ...req.body, password, role: "user" });
-      res.status(201).send({ user, message: "Usuario creado" });
+      res.status(201).send({ user, password, message: "Usuario creado" });
     } catch (error) {
       console.error(error);
       res
@@ -35,7 +35,7 @@ const UserController = {
         return res.status(400).send({ msg: "Correo o contraseña incorrectos" });
       }
 
-      const isMatch = await bcrypt.compare(req.body.password, user.password);
+      const isMatch = await argon2.verify(user.password, req.body.password);
       if (!isMatch) {
         return res.status(400).send({ msg: "Correo o contraseña incorrectos" });
       }
@@ -44,7 +44,7 @@ const UserController = {
       if (user.tokens.length > 4) user.tokens.shift();
       user.tokens.push(token);
       await user.save();
-      res.send({ msg: "Bienvenid@ " + user.username, token, user });
+      res.send({ msg: "Bienvenid@ " + user.firstName, token, user });
     } catch (error) {
       console.error(error);
     }
