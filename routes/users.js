@@ -8,6 +8,6 @@ router.post("/createUser",uploadUserPostsImages.single('image'),UserController.c
 router.post("/loginUser",UserController.login)
 router.delete("/logoutUser",authentication, UserController.logout)
 router.get("/getInfo", authentication, UserController.getInfo);
-
+router.get("/getAllUsers", UserController.getAllUsers);
 
 module.exports = router
