@@ -12,6 +12,8 @@ app.use(express.json());
 
 app.use("/users", require("./routes/users"));
 app.use("/posts", require("./routes/posts"));
+app.use("/categories", require("./routes/categories"));
+
 app.use(express.static('imagesmulter'));
 
 
