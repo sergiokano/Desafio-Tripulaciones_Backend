@@ -1,3 +1,4 @@
+const Post = require("../models/Post");
 const User = require("../models/User");
 const argon2 = require('argon2');
 const jwt = require("jsonwebtoken");
@@ -63,6 +64,29 @@ const UserController = {
       });
     }
   },
+  async getInfo(req, res) {
+    try {
+      const user = await User.findById(req.user._id)
+        .populate({
+          path: "postIds",
+          select: "incidence description image_path",
+          populate: {
+            path: "comments.userId",
+          },
+        })
+        
+      const posts = await Post.find({
+        _id: {$in: user.postIds}
+      }).select("incidence description image_path");
+
+      res.send({message: "information", user, posts});
+    } catch (error) {
+      console.error(error);
+      res.status(500).send({
+        message: "There was a problem",
+      });
+    }
+  }
 };
 
 module.exports = UserController;
