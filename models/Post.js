@@ -25,7 +25,16 @@ const PostSchema = new mongoose.Schema(
         comment: String,
       },
     ],
-
+    category: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Category',
+      required: true
+    },
+    subcategory: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Subcategory',
+        required: true
+    },
     verification: [{ type: ObjectId }],
     image_path: { type: String }
   },
