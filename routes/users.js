@@ -24,11 +24,13 @@ router.post(
         check("email", "El formato del email no es válido").isEmail(),
         check("password")
             .notEmpty()
-            .withMessage("El campo de nombre no puede estar vacío"),
-        // .matches(/^(?=.[a-z])(?=.[A-Z])(?=.*[@#$!?]).{8,}$/)
-        // .withMessage(
-        //     "La contraseña debe incluir al menos 1 miniscula, 1 mayuscula, un caracter especial (@ ? ! #) y 8 caracteres en total"
-        // ),
+            .withMessage("El campo de nombre no puede estar vacío")
+            .matches(
+                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,30}$/
+            )
+            .withMessage(
+                "La contraseña debe incluir al menos 1 minúscula, 1 mayúscula, un carúcter especial y 8 caracteres en total"
+            ),
         check("password2", "Por favor, confirma la contraseña").notEmpty(),
         validateBodyParams,
     ],
