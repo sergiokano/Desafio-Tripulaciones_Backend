@@ -36,6 +36,19 @@ const CategoryController = {
         .send({ msg: "No es posible crear la subcategoría", error });
     }
   },
+  async getSubcategoryByName(req, res) {
+    try {
+      if (req.params.incidence.length > 20) {
+        return res.status(400).send("Búsqueda demasiado larga");
+      }
+      const incidence = new RegExp(req.params.incidence, "i");
+      const post = await Post.find({ incidence });
+      res.send(post);
+    } catch (error) {
+      console.log(error);
+      res.status(500).send(error);
+    }
+  },
 };
 
 module.exports = CategoryController;
