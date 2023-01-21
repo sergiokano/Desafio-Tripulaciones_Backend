@@ -59,16 +59,17 @@ const UserController = {
           ],
         });
       }
-      req.body.username = req.body.username;
-      req.body.firstName = req.body.firstName;
-      req.body.lastName = req.body.lastName;
-      req.body.cif = req.body.cif;
-      req.body.email = req.body.email;
-      req.body.password = req.body.password;
-      req.body.phone = req.body.phone;
+
       const password = await argon2.hash(req.body.password);
       const user = await User.create({
-        ...req.body,
+        username: req.body.username,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        username: req.body.username,
+        cif: req.body.cif,
+        email: req.body.email,
+        password: req.body.password,
+        phone: req.body.phone,
         isAssociation: true,
         password,
         role: "association",

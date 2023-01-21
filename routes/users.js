@@ -22,12 +22,12 @@ router.post(
       .withMessage("El campo de nombre no puede estar vacío")
       .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/)
       .withMessage(
-        "La contraseña debe incluir al menos 1 minúscula, 1 mayúscula, un carúcter especial y 8 caracteres en total"
+        "La contraseña debe incluir al menos 1 minúscula, 1 mayúscula, un carácter especial y 8 caracteres en total"
       ),
     check("password2", "Por favor, confirma la contraseña").notEmpty(),
     validateBodyParams,
   ],
-  UserController.createAssociation
+  UserController.createUser
 );
 router.post(
   "/createAssociation",
@@ -59,7 +59,7 @@ router.post(
     check("password2", "Por favor, confirma la contraseña").notEmpty(),
     validateBodyParams,
   ],
-  UserController.createUser
+  UserController.createAssociation
 );
 router.post("/loginUser", UserController.login);
 router.delete("/logoutUser", authentication, UserController.logout);
