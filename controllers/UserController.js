@@ -46,6 +46,39 @@ const UserController = {
             next(error);
         }
     },
+    async createAssociation (req, res, next) {
+      try {
+          if (req.body.password !== req.body.password2) {
+              return res.status(400).send({
+                  ok: false,
+                  errors: [
+                      {
+                          msg: "Las contraseñas no coinciden",
+                          param: "password",
+                      },
+                  ],
+              });
+          }
+          req.body.isAssociation = true;
+          req.body.username = req.body.username;
+          req.body.firstName = req.body.firstName;
+          req.body.lastName = req.body.lastName;
+          req.body.cif = req.body.cif;
+          req.body.email = req.body.email;
+          req.body.password = req.body.password;
+          req.body.phone = req.body.phone;
+          const password = await argon2.hash(req.body.password);
+          const user = await User.create({
+              ...req.body,
+              password,
+              role: "association",
+          });
+          res.status(201).send({ user, message: "Asociación creada" });
+      } catch (error) {
+          console.error(error);
+          next(error);
+      }
+  },
 
     async login(req, res) {
         try {
