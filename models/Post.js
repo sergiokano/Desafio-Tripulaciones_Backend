@@ -13,9 +13,9 @@ const PostSchema = new mongoose.Schema(
       type: String,
 
       required: [true, "Por favor, descríbenos la incidencia"],
+      
     },
-
-    userId: {
+     userId: {
       type: ObjectId,
       ref: "User",
     },
