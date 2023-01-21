@@ -36,6 +36,7 @@ const UserSchema = new mongoose.Schema(
         tokens: [],
         isAdmin: { type: Boolean, default: false },
         postIds: [{ type: ObjectId, ref: "Post" }],
+        image_path: { type: String }
     },
     { timestamps: true }
 );

@@ -1,3 +1,4 @@
+const Post = require("../models/Post");
 const User = require("../models/User");
 const argon2 = require("argon2");
 const jwt = require("jsonwebtoken");
@@ -88,6 +89,40 @@ const UserController = {
             console.error(error);
             res.status(500).send({
                 message: "Hubo un problema al intentar desconectar al usuario",
+            });
+        }
+    },
+    async getInfo(req, res) {
+        try {
+            const user = await User.findById(req.user._id).populate({
+                path: "postIds",
+                select: "incidence description image_path",
+                populate: {
+                    path: "comments.userId",
+                },
+            });
+
+            const posts = await Post.find({
+                _id: { $in: user.postIds },
+            }).select("incidence description image_path");
+
+            res.send({ message: "information", user, posts });
+        } catch (error) {
+            console.error(error);
+            res.status(500).send({
+                message: "There was a problem",
+            });
+        }
+    },
+    async getAllUsers(req, res) {
+        try {
+            const users = await User.find();
+            res.send(users);
+        } catch (error) {
+            console.error(error);
+            res.status(500).send({
+                msg: "Ha habido un problema al traer todos los usuarios",
+                error,
             });
         }
     },
