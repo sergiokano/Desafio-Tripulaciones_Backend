@@ -11,17 +11,16 @@ router.post(
   [
     check("firstName", "El campo de nombre no puede estar vacío").notEmpty(),
     check("lastName", "El campo de apellidos no puede estar vacío").notEmpty(),
-    check(
-      "username",
-      "El campo de nombre de usuario no puede estar vacío"
-    ).notEmpty(),
+    check("username", "El campo de nombre de usuario no puede estar vacío")
+      .notEmpty()
+      .matches(/^\S*$/, "g")
+      .withMessage("El nombre de usuario tiene que ir junto, sin espacios")
+      .isLength({ max: 30 }),
     check("email", "El formato del email no es válido").isEmail(),
     check("password")
       .notEmpty()
       .withMessage("El campo de nombre no puede estar vacío")
-      .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/
-      )
+      .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/)
       .withMessage(
         "La contraseña debe incluir al menos 1 minúscula, 1 mayúscula, un carúcter especial y 8 caracteres en total"
       ),
@@ -33,20 +32,27 @@ router.post(
 router.post(
   "/createAssociation",
   [
-    check(
-      "username",
-      "El campo de nombre de usuario no puede estar vacío"
-    ).notEmpty(),
+    check("username", "El campo de nombre de usuario no puede estar vacío")
+      .notEmpty()
+      .matches(/^\S*$/, "g")
+      .withMessage("El nombre de usuario tiene que ir junto, sin espacios")
+      .isLength({ max: 30 })
+      .withMessage(
+        "El nombre de usuario no puede contener más de 30 carácteres"
+      ),
     check("firstName", "El campo de nombre no puede estar vacío").notEmpty(),
     check("lastName", "El campo de apellidos no puede estar vacío").notEmpty(),
     check("email", "El formato del email no es válido").isEmail(),
-    check("cif", "El campo CIF no puede estar vacío").notEmpty(),
+    check("cif", "El campo CIF no puede estar vacío")
+      .notEmpty()
+      .matches(/^[A-Z]{1}[0-9]{8}$/)
+      .withMessage(
+        "El número CIF está en un formato incorrecto. Ej: A123123123"
+      ),
     check("password")
       .notEmpty()
       .withMessage("El campo de nombre no puede estar vacío")
-      .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/
-      )
+      .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/)
       .withMessage(
         "La contraseña debe incluir al menos 1 minúscula, 1 mayúscula, un carácter especial y 8 caracteres en total"
       ),
