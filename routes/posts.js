@@ -6,6 +6,7 @@ const { uploadUserPostsImages } = require('../middlewares/multer');
 
 router.post("/", authentication, uploadUserPostsImages.single('image'), PostController.create);
 router.get("/", PostController.getAll);
+router.get("/id/:_id", PostController.getById);
 router.get("/search/:incidence", PostController.getPostsByName);
 router.delete("/id/:_id", authentication, isAuthor, PostController.delete);
 router.put("/:_id", authentication, uploadUserPostsImages.single('image'), isAuthor, PostController.update);
