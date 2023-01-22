@@ -18,6 +18,17 @@ const UserController = {
           ],
         });
       }
+      if (req.body.checked !== true) {
+        return res.status(400).send({
+          ok: false,
+          errors: [
+            {
+              msg: "Debes aceptar los términos y privacidad",
+              param: "checked",
+            },
+          ],
+        });
+      }
       const birthdate = new Date(req.body.birthdate);
       const monthDiff = Date.now() - birthdate.getTime();
       const ageDt = new Date(monthDiff);
@@ -55,6 +66,17 @@ const UserController = {
             {
               msg: "Las contraseñas no coinciden",
               param: "password",
+            },
+          ],
+        });
+      }
+      if (req.body.checked !== true) {
+        return res.status(400).send({
+          ok: false,
+          errors: [
+            {
+              msg: "Debes aceptar los términos y privacidad",
+              param: "checked",
             },
           ],
         });
