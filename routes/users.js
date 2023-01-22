@@ -47,7 +47,7 @@ router.post(
       .notEmpty()
       .matches(/^[A-Z]{1}[0-9]{8}$/)
       .withMessage(
-        "El número CIF está en un formato incorrecto. Ej: A123123123"
+        "El número CIF está en un formato incorrecto. Ej: A12345678"
       ),
     check("password")
       .notEmpty()
