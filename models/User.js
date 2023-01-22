@@ -22,6 +22,7 @@ const UserSchema = new mongoose.Schema(
         },
         cif: {
             type: String,
+            unique: true,
         },
         isAssociation: {
             type: Boolean,
@@ -36,7 +37,7 @@ const UserSchema = new mongoose.Schema(
         tokens: [],
         isAdmin: { type: Boolean, default: false },
         postIds: [{ type: ObjectId, ref: "Post" }],
-        image_path: { type: String }
+        image_path: { type: String },
     },
     { timestamps: true }
 );

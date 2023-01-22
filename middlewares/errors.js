@@ -25,8 +25,19 @@ const typeError = (err, req, res, next) => {
                 ok: false,
                 errors: [
                     {
-                        msg: "Email already in use",
+                        msg: "El email elegido ya está en uso",
                         param: "email",
+                        location: "body",
+                    },
+                ],
+            });
+        } else if (Object.keys(err.keyValue)[0] === "cif") {
+            res.status(400).send({
+                ok: false,
+                errors: [
+                    {
+                        msg: "El email CIF ya está en uso",
+                        param: "cif",
                         location: "body",
                     },
                 ],
@@ -36,7 +47,7 @@ const typeError = (err, req, res, next) => {
                 ok: false,
                 errors: [
                     {
-                        msg: "Username already in use",
+                        msg: "El usuario elegido ya está en uso",
                         param: "username",
                         location: "body",
                     },
