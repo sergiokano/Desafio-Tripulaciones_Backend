@@ -57,6 +57,7 @@ router.post(
         "La contraseña debe incluir al menos 1 minúscula, 1 mayúscula, un carácter especial y 8 caracteres en total"
       ),
     check("password2", "Por favor, confirma la contraseña").notEmpty(),
+    check("checked", "Debes aceptar los términos y privacidad para continuar").equals(),
     validateBodyParams,
   ],
   UserController.createAssociation
