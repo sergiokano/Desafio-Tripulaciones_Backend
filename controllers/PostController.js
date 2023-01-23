@@ -5,15 +5,18 @@ const PostController = {
   async create(req, res, next) {
     try {
       if (req.file) req.body.image_path = req.file.filename;
+      const longitude = req.body.longitude;
+      const latitude = req.body.latitude;
       const post = await Post.create({
         ...req.body,
         userId: req.user._id,
+        longitude: longitude,
+        latitude: latitude,
       });
       await User.findByIdAndUpdate(req.user._id, {
         $push: { postIds: post._id },
       });
-      res.status(201).send(post);
-      res.send({ msg: "Incidencia creada correctamente", post });
+      res.status(201).send({ msg: "Incidencia creada correctamente", post });
     } catch (error) {
       console.error(error);
       next(error);
@@ -33,6 +36,17 @@ const PostController = {
       console.error(error);
     }
   },
+  async getById(req, res) {
+    try {
+      const post = await Post.findById(req.params._id);
+      res.send({
+        msg: "Aquí tienes la incidencia por ID que has solicitado",
+        post,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  },
   async getPostsByName(req, res) {
     try {
       if (req.params.incidence.length > 20) {
@@ -46,18 +60,6 @@ const PostController = {
       res.status(500).send(error);
     }
   },
-
-  async getPostById(req, res) {
-    try {
-      const post = await Post.findById(req.params._id)
-      
-      res.send(post);
-    } catch (error) {
-      console.error(error);
-      res.status(500).send({ msg: "Error: Unable to get post by id", error });
-    }
-  },
-
   async delete(req, res) {
     try {
       const post = await Post.findByIdAndDelete(req.params._id);

@@ -27,6 +27,14 @@ const PostSchema = new mongoose.Schema(
             type: String,
         },
 
+        longitude: {
+            type: Number,
+        },
+
+        latitude: {
+            type: Number,
+        },
+
         userId: {
             type: ObjectId,
             ref: "User",

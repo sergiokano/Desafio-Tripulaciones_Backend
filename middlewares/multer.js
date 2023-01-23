@@ -9,7 +9,7 @@ const generateUploadImageMulter = path => Multer({
         if (mimetypes.includes(file.mimetype)) cb(null, true)
         else cb(null, false)
     },
-    limits: { fileSize: 2 * 1024 * 1024 }
+    limits: { fileSize: 2 * 5000 * 5000 }
 });
 const uploadUserPostsImages = generateUploadImageMulter('./imagesmulter');
 
