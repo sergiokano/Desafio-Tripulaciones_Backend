@@ -15,15 +15,11 @@ const PostSchema = new mongoose.Schema(
             required: [true, "Por favor, descríbenos la incidencia"],
         },
 
+        address: {
+            type: String,
+        },
+
         code: {
-            type: String,
-        },
-
-        street: {
-            type: String,
-        },
-
-        number: {
             type: String,
         },
 
