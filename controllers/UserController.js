@@ -151,7 +151,7 @@ const UserController = {
         try {
             const user = await User.findById(req.user._id).populate({
                 path: "postIds",
-                select: "incidence description image_path",
+                select: "incidence description image_path address",
                 populate: {
                     path: "comments.userId",
                 },
