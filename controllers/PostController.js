@@ -41,7 +41,7 @@ const PostController = {
   },
   async getById(req, res) {
     try {
-      const post = await Post.findById(req.params._id);
+      const post = await Post.findById(req.params._id).populate("userId");
 
       res.send({
         msg: "Aquí tienes la incidencia por ID que has solicitado",
