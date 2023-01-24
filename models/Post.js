@@ -23,6 +23,14 @@ const PostSchema = new mongoose.Schema(
             type: String,
         },
 
+        category: {
+            type: String,
+        },
+
+        subCategory: {
+            type: String,
+        },
+
         longitude: {
             type: Number,
         },
