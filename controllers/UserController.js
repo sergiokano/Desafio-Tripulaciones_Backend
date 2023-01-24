@@ -149,7 +149,8 @@ const UserController = {
     },
     async getInfo(req, res) {
         try {
-            const user = await User.findById(req.user._id).populate({
+            const user = await User.findById(req.user._id)
+            .populate({
                 path: "postIds",
                 select: "incidence description image_path address",
                 populate: {
