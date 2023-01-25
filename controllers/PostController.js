@@ -33,7 +33,6 @@ const PostController = {
                 .populate("comments.userId")
                 .limit(limit * 1)
                 .skip((page - 1) * limit);
-            res.send(posts);
             res.send({ msg: "Aquí tienes todas las incidencias", posts });
         } catch (error) {
             console.error(error);
@@ -100,7 +99,9 @@ const PostController = {
                 req.params._id,
                 { $push: { comments: { ...req.body, userId: req.user._id } } },
                 { new: true }
-            );
+            )
+                .populate("userId")
+                .populate("comments.userId");
             res.send(post);
         } catch (error) {
             console.error(error);
