@@ -33,7 +33,7 @@ const PostController = {
                 .populate("comments.userId")
                 .limit(limit * 1)
                 .skip((page - 1) * limit);
-            res.send({ msg: "Aquí tienes todas las incidencias", posts });
+            res.send(posts);
         } catch (error) {
             console.error(error);
         }
