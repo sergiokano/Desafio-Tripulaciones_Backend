@@ -41,7 +41,7 @@ const PostController = {
   },
   async getById(req, res) {
     try {
-      const post = await Post.findById(req.params._id).populate("userId");
+      const post = await Post.findById(req.params._id).populate("userId")
 
       res.send({
         msg: "Aquí tienes la incidencia por ID que has solicitado",
@@ -149,6 +149,8 @@ const PostController = {
       res.status(500).send({ msg: "No hemos podido quitar tu like" });
     }
   },
+
+  
 };
 
 module.exports = PostController;

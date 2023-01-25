@@ -45,7 +45,7 @@ const PostSchema = new mongoose.Schema(
     },
     comments: [
       {
-        userId: { type: ObjectId, ref: "User" },
+        userId: { type: ObjectId, ref: "Comment" },
         comment: String,
       },
     ],
