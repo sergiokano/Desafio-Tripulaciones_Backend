@@ -20,6 +20,9 @@ const UserSchema = new mongoose.Schema(
         phone: {
             type: String,
         },
+        role: {
+            type: String,
+        },
         cif: {
             type: String,
             unique: true,
