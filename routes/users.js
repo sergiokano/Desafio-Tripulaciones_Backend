@@ -80,7 +80,6 @@ router.post(
             .withMessage("El campo de contraseña no puede estar vacío")
             .matches(
                 /(?=^.{6,20}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&amp;*()_+}{&quot;:;'?/&gt;.&lt;,])(?!.*\s).*$/
-                
 
             )
             .withMessage(
