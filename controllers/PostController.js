@@ -44,7 +44,7 @@ const PostController = {
             const posts = await Post.find()
                 .limit(limit * 1)
                 .skip((page - 1) * limit);
-            const postsMapped = post.map((post) => {
+            const postsMapped = posts.map((post) => {
                 return {
                     mongoId: post._id,
                     address: post.address,
