@@ -38,6 +38,16 @@ const isAdmin = async (req, res, next) => {
     next();
 };
 
+const isAdminData = async (req, res, next) => {
+    const admins = ["admin", "data"];
+    if (!admins.includes(req.user.role)) {
+        return res.status(403).send({
+            message: "You do not have permission",
+        });
+    }
+    next();
+};
+
 const isAuthor = async (req, res, next) => {
     try {
         const post = await Post.findById(req.params._id);
@@ -54,4 +64,4 @@ const isAuthor = async (req, res, next) => {
     }
 };
 
-module.exports = { authentication, isAdmin, isAuthor };
+module.exports = { authentication, isAdmin, isAuthor, isAdminData };

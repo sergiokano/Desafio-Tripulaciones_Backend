@@ -38,6 +38,26 @@ const PostController = {
             console.error(error);
         }
     },
+    async getPostsQueryData(req, res) {
+        try {
+            const { page = 1, limit = 200 } = req.query;
+            const posts = await Post.find()
+                .limit(limit * 1)
+                .skip((page - 1) * limit);
+            const postsMapped = post.map((post) => {
+                return {
+                    mongoId: post._id,
+                    address: post.address,
+                    code: post.code,
+                    longitude: post.longitude,
+                    latitude: post.latitude,
+                };
+            });
+            res.send(postsMapped);
+        } catch (error) {
+            console.error(error);
+        }
+    },
     async getById(req, res) {
         try {
             const post = await Post.findById(req.params._id)
