@@ -15,7 +15,12 @@ router.post(
     PostController.create
 );
 router.get("/", PostController.getAll);
-router.get("/getPostsQueryData", isAdminData, PostController.getPostsQueryData);
+router.get(
+    "/getPostsQueryData",
+    authentication,
+    isAdminData,
+    PostController.getPostsQueryData
+);
 router.get("/id/:_id", PostController.getById);
 router.get("/search/:incidence", PostController.getPostsByName);
 router.delete("/id/:_id", authentication, isAuthor, PostController.delete);
