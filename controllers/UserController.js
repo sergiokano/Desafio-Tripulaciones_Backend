@@ -29,17 +29,7 @@ const UserController = {
           ],
         });
       } 
-      if (req.body.checkedTerms !== true) {
-        return res.status(400).send({
-            ok: false,
-            errors: [
-                {
-                    msg: "Es necesario aceptar los términos y condiciones",
-                    param: "checkedTerms",
-                },
-            ],
-        });
-    }
+
       const birthdate = new Date(req.body.birthdate);
       const monthDiff = Date.now() - birthdate.getTime();
       const ageDt = new Date(monthDiff);
@@ -92,17 +82,7 @@ const UserController = {
           ],
         });
       } 
-      if (req.body.checkedTerms !== true) {
-        return res.status(400).send({
-            ok: false,
-            errors: [
-                {
-                    msg: "Es necesario aceptar los términos y condiciones",
-                    param: "checkedTerms",
-                },
-            ],
-        });
-    }
+  
 
       const password = await argon2.hash(req.body.password);
       const user = await User.create({

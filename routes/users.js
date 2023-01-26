@@ -32,10 +32,12 @@ router.post(
             .notEmpty()
             .withMessage("El campo de contraseña no puede estar vacío")
             .matches(
-                /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/
-            )
+      
+                /(?=^.{6,20}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&amp;*()_+}{&quot;:;'?/&gt;.&lt;,])(?!.*\s).*$/
+
+                )
             .withMessage(
-                "La contraseña debe incluir al menos 1 minúscula, 1 mayúscula, un carácter especial y 8 caracteres en total"
+                "La contraseña debe incluir al menos 1 minúscula, 1 mayúscula, un carácter especial y entre 8 y 20 caracteres"
             ),
         check("password2", "Por favor, confirma la contraseña").notEmpty(),
         validateBodyParams,
@@ -77,11 +79,12 @@ router.post(
             .notEmpty()
             .withMessage("El campo de contraseña no puede estar vacío")
             .matches(
-                /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/
+                /(?=^.{6,20}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&amp;*()_+}{&quot;:;'?/&gt;.&lt;,])(?!.*\s).*$/
+
             )
             .withMessage(
-                "La contraseña debe incluir al menos 1 minúscula, 1 mayúscula, un carácter especial y 8 caracteres en total"
-            ),
+                "La contraseña debe incluir al menos 1 minúscula, 1 mayúscula, un carácter especial y un mínimo de 8 caracteres"
+                            ),
         check("password2", "Por favor, confirma la contraseña").notEmpty(),
         validateBodyParams,
     ],
